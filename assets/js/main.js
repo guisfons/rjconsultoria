@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', function(){
     })
 
     wrapperDistance()
+    header()
 })
 
 function wrapperDistance(){
@@ -18,5 +19,15 @@ function wrapperDistance(){
     })
     document.querySelectorAll('.wrapper-right').forEach(function(item){
         item.style.paddingRight = `${distance}px`
+    })
+}
+
+function header() {
+    const menuButton = document.querySelector('.header__button');
+    const menuHeader = document.querySelector('.header__menu');
+    
+    menuButton.addEventListener('click', function() {
+        menuButton.classList.toggle('header__button--active')
+        menuHeader.classList.toggle('header__menu--active')
     })
 }

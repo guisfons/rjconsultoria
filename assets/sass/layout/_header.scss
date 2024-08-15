@@ -24,6 +24,30 @@
         justify-content: space-between;
         gap: 3.3rem;
         width: 100%;
+
+        @include max (900) {
+            opacity: 0;
+            visibility: hidden;
+
+            width: 80vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            right: 0;
+            transform: translateX(80vw);
+            transition: .5s ease-in-out;
+
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: $bg-dark-button;
+        }
+
+        &--active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
     }
 
     &__item {
@@ -53,8 +77,10 @@
             }
         }
 
-        &:first-of-type {
-            margin-left: auto;
+        @include min (901) {
+            &:first-of-type {
+                margin-left: auto;
+            }
         }
 
         &--tempodetrabalho {
@@ -96,9 +122,38 @@
 
         &--contato {
             background: $bg-gradient;
-            margin-left: auto;
+
+            @include min (901) {
+                margin-left: auto;
+            }
+
             padding: .8rem 2rem;
             border-radius: 5.3rem;
+        }
+    }
+
+    &__button {
+        width: 3rem;
+        height: 2.4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+
+        @include min (901) {
+            display: none;
+        }
+
+        span {
+            width: 100%;
+            height: .2rem;
+            background: $bg-gradient;
+            transition: all 0.5s ease;
+        }
+
+        &--active {
+            position: relative;
+            z-index: 999999;
         }
     }
 }

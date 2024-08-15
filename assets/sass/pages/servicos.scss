@@ -1,4 +1,5 @@
 @import '../abstracts/variables';
+@import '../abstracts/utilities';
 @import '../components/button';
 
 pre:has(~h2) {
@@ -21,6 +22,10 @@ h2:has(~p) {
     flex-wrap: wrap;
     gap: 5rem;
 
+    @include max (900) {
+        justify-content: center;
+    }
+
     figure {
         max-width: calc(50% - 5rem);
         width: 100%;
@@ -28,6 +33,11 @@ h2:has(~p) {
         position: relative;
         margin-left: 2.2rem;
         margin-bottom: 2.2rem;
+
+        @include max (900) {
+            max-width: 100%;
+            order: 1;
+        }
 
         &::before {
             content: '';
@@ -55,6 +65,10 @@ h2:has(~p) {
         max-width: calc(50% - 5rem);
         width: 100%;
         min-width: 30rem;
+
+        @include max (900) {
+            max-width: 100%;
+        }
     }
 }
 
@@ -67,7 +81,7 @@ h2:has(~p) {
 
         pre { color: $black; }
 
-        .s-servico__button { background: $black; }
+        .s-servico__button { background: $bg-dark-button; }
 
         ul li::before {
             content: url('../img/list-icon-b.svg');
@@ -82,8 +96,12 @@ h2:has(~p) {
         flex-wrap: wrap;
 
         & > *:not(a) {
-            max-width: 52.6rem;
+            max-width: calc(50% - 3rem);
             width: 100%;
+
+            @include max (900) {
+                max-width: 100%;
+            }
         }
     }
 

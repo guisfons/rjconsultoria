@@ -57,9 +57,29 @@
             max-width: 26rem;
             width: 100%;
 
+            @include max (1225) {
+                max-width: calc(33.33% - 1.6rem);
+            }
+
+            @include max (768) {
+                max-width: calc(50% - 1.6rem);
+            }
+
+            @include max (600) {
+                max-width: 100%;
+            }
+
             &[data-name="Email"] {
                 max-width: calc(26rem * 2 + 1.6rem);
                 width: 100%;
+
+                @include max (1225) {
+                    max-width: calc(100% - 1.6rem);
+                }
+
+                @include max (600) {
+                    max-width: 100%;
+                }
             }
     
             &[data-name="aceitardeclaracao"] {

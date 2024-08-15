@@ -12,7 +12,7 @@ if($calculo) :
     echo '<section class="wrapper t-trabalho">';
     if(!is_front_page()) :
         echo
-        '<div class="t-trabalho__heading">
+        '<div animate-fadein class="t-trabalho__heading">
             <article>'.$texto1.'</article>
             <figure><img src="'.esc_url($imagem_de_destaque).'" alt="Imagem de uma mulher de amarelo com uma lupa"></figure>
             <article>'.$texto2.'</article>
