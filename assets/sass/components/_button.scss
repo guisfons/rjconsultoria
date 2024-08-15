@@ -1,0 +1,11 @@
+@mixin btn {
+    padding: .8rem 2rem;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    border-radius: 5.3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+}

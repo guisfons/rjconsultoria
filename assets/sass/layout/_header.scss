@@ -1,0 +1,104 @@
+.header {
+    padding: 2rem 0;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: $bg;
+    filter: drop-shadow(0 0rem 1rem rgba($color: $black, $alpha: .33));
+
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__logo {
+        font-size: 0;
+        max-width: 5rem;
+    }
+
+    &__menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 3.3rem;
+        width: 100%;
+    }
+
+    &__item {
+        font-size: 1.5rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        position: relative;
+
+        &:not(.header__item--tempodetrabalho):not(.header__item--contato) {
+            &::before {
+                content: '';
+                position: absolute;
+                bottom: -.1rem;
+                left: 0;
+                width: 0;
+                height: .2rem;
+                background: $bg-gradient;
+                opacity: 0;
+                visibility: hidden;
+                transition: .3s ease-in-out;
+            }
+
+            &:hover::before {
+                opacity: 1;
+                visibility: visible;
+                width: 1rem;
+            }
+        }
+
+        &:first-of-type {
+            margin-left: auto;
+        }
+
+        &--tempodetrabalho {
+            color: $secondary;
+            background-color: $bg;
+            padding: .7rem 1.9rem;
+            border: .1rem solid transparent;
+            border-radius: 5.3rem;
+            margin: .1rem .2rem;
+            transition: .3s ease-in-out;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: -.2rem;
+                left: -.2rem;
+                z-index: -1;
+
+                width: calc(100% + 0.4rem);
+                height: calc(100% + 0.4rem);
+
+                background: $bg-gradient;
+                border-radius: 5.3rem;
+                opacity: 1;
+                visibility: visible;
+                transition: .3s ease-in-out;
+            }
+
+            &:hover {
+                border: .1rem solid $white;
+                color: $white;
+
+                &::after {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+            }
+        }
+
+        &--contato {
+            background: $bg-gradient;
+            margin-left: auto;
+            padding: .8rem 2rem;
+            border-radius: 5.3rem;
+        }
+    }
+}

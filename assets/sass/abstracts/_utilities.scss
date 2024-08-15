@@ -1,0 +1,50 @@
+@mixin min($screen) {
+    @media only screen and (min-width: $screen+"px") {
+        @content;
+    }
+}
+
+@mixin max($screen) {
+    @media only screen and (max-width: $screen+"px") {
+        @content;
+    }
+}
+
+.mobile-only {
+    @include min(801) {
+        display: none !important;
+    }
+}
+
+.desktop-only {
+    @include max(800) {
+        display: none !important;
+    }
+}
+
+@keyframes card-figure {
+    0% {top: 5rem;}
+    50% {top: 10rem;}
+    100% {top: 5rem;}
+}
+
+@keyframes flares-movement {
+    0% {left: -5%;}
+    25% {bottom: 10%;}
+    50% {left: 101%;bottom: 0%;}
+    100% {left: -5%; bottom: 0%;}
+}
+
+@keyframes flares-movement2 {
+    0% {right: 101%;}
+    50% {bottom: 5%;}
+    100% {right: -5%; bottom: 0%;}
+}
+
+.heading {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: $secondary;
+    text-transform: uppercase;
+    display: block;
+}

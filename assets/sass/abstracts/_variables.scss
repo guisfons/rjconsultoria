@@ -1,0 +1,12 @@
+$bg: #1F1D1D;
+$black: #000;
+$almost-black: #151515;
+$gray: #292929;
+$white: #fff;
+$secondary: #EB001B;
+$third: #85000F;
+$yellow: #FFA800;
+$yellow2: #E67800;
+$bg-gradient: linear-gradient(90deg, $secondary, $third);
+$bg-gradient-banner: linear-gradient(90deg, $secondary 0%, $third 60%, rgba($color: $white, $alpha: 0) 75%);
+$bg-dark-button: linear-gradient(90deg, $black, $almost-black);

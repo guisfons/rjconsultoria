@@ -1,0 +1,82 @@
+.t-trabalho__form {
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem 1.6rem;
+
+        h3, h3 + p {
+            max-width: 66.4rem;
+            width: 100%;
+        }
+
+        p {
+            width: 100%;
+
+            &:has(.wpcf7-form-control-wrap) {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem 1.6rem;
+            }
+        }
+
+        input:not([type="checkbox"]):not([type="submit"]) {
+            width: 100%;
+
+            border-radius: 4.4rem;
+            border: .1rem solid $white;
+            background-color: transparent;
+
+            outline: none;
+            appearance: none;
+
+            padding: 1.3rem 1.4rem;
+            color: $white;
+            font-size: 1.5rem;
+            font-family: inherit;
+
+            &[type="email"] {
+                max-width: 100%;
+            }
+        }
+
+        input[type="submit"] {
+            @include btn;
+            background: $bg-gradient;
+            filter: drop-shadow(.8rem .4rem 1.6rem rgba($color: $yellow, $alpha: 0.1));
+            outline: none;
+            border: none;
+            appearance: none;
+            cursor: pointer;
+            color: $white;
+            margin: .4rem auto 0;
+            font-family: inherit;
+        }
+
+        .wpcf7-form-control-wrap {
+            position: relative;
+            max-width: 26rem;
+            width: 100%;
+
+            &[data-name="Email"] {
+                max-width: calc(26rem * 2 + 1.6rem);
+                width: 100%;
+            }
+    
+            &[data-name="aceitardeclaracao"] {
+                max-width: 100%;
+
+                .wpcf7-list-item {
+                    label {
+                        display: flex;
+                        align-items: flex-start;
+                        gap: .6rem;
+                    }
+                }
+            }
+        }
+        
+        br {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,17 @@
+// SCSS global
+
+@import 'abstracts/variables';
+@import 'abstracts/fonts';
+@import 'abstracts/utilities';
+
+@import 'base/reset';
+
+@import 'components/button';
+@import 'components/banner';
+@import 'components/form';
+@import 'components/tempo-de-trabalho';
+
+@import 'layout/footer';
+@import 'layout/header';
+
+@import 'pages/home';
