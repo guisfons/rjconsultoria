@@ -4,6 +4,14 @@ $( document ).ready(function() {
         slidesToScroll: 1,
         infinite: false,
         prevArrow: '.depoimentos__arrow--prev',
-        nextArrow: '.depoimentos__arrow--next'
+        nextArrow: '.depoimentos__arrow--next',
+        responsive: [
+            {
+                breakpoint: 901,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
     })
 })

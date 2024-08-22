@@ -6,7 +6,7 @@ if($mantenha_informado):
     $conteudo = $mantenha_informado['conteudo'];
 
     echo
-    '<section animate-fadein class="m-informado">
+    '<section class="m-informado">
         <figure><img src="'.$imagem_de_destaque['url'].'" alt="'.$imagem_de_destaque['alt'].'"></figure>
 
         <article>

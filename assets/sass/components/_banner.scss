@@ -19,6 +19,10 @@
         min-height: 27.5rem !important;
         height: fit-content !important;
 
+        @include max (900) {
+            flex-direction: column;
+        }
+
         transition: .3s ease-in-out;
 
         &::after {
@@ -33,6 +37,10 @@
             background: $bg-gradient-banner;
 
             z-index: 1;
+
+            @include max (900) {
+                display: none;
+            }
         }
 
         article {
@@ -41,6 +49,13 @@
             padding: 3.6rem 0 3.6rem 5rem;
             max-width: 66rem;
             width: 100%;
+
+            @include max (900) {
+                max-width: initial;
+                order: 1;
+                background-color: $secondary;
+                padding: 2rem;
+            }
 
             h3 {
                 font-size: 1.5rem;
@@ -75,6 +90,11 @@
             position: absolute;
             top: 0;
             right: 0;
+
+            @include max (900) {
+                max-width: initial;
+                position: relative;
+            }
 
             img {
                 width: 100%;

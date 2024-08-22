@@ -28,6 +28,12 @@
     100% {top: 5rem;}
 }
 
+@keyframes card-figure-mobile {
+    0% {bottom: -15rem;}
+    50% {bottom: -10rem;}
+    100% {bottom: -15rem;}
+}
+
 @keyframes flares-movement {
     0% {left: -5%;}
     25% {bottom: 10%;}

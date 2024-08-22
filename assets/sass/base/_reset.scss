@@ -54,7 +54,7 @@ p {
     font-weight: 300;
 }
 
-ul:not(.slick-dots) {
+ul:not(.slick-dots):not(.list) {
     list-style: none;
 
     li {

@@ -22,12 +22,12 @@ if (!empty($menu_items)) {
     }
 }
 ?>
-<section animate-fadein class="wrapper s-banner">
+<section class="wrapper s-banner">
     <figure><img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>"></figure>
     <article><?php echo wpautop(get_the_content()); ?></article>
 </section>
 
-<section animate-fadein class="wrapper s-servico">
+<section class="wrapper s-servico">
     <div class="s-servico__content">
         <article class="s-servico__text"><?php echo get_field('conteudo_primeira'); ?></article>
         <?php if (have_rows('lista_primeira')) : ?>
@@ -41,7 +41,7 @@ if (!empty($menu_items)) {
     <a href="<?php echo $contato->url; ?>" class="s-servico__button">Entrar em contato</a>
 </section>
 
-<section animate-fadein class="s-servico s-servico--red">
+<section class="s-servico s-servico--red">
     <div class="wrapper">
         <div class="s-servico__content">
             <article class="s-servico__text"><?php echo get_field('conteudo_segunda'); ?></article>
@@ -59,7 +59,7 @@ if (!empty($menu_items)) {
 
 <?php get_template_part('template-parts/tempo-de-trabalho'); ?>
 
-<section animate-fadein class="wrapper s-servico">
+<section class="wrapper s-servico">
     <div class="s-servico__content">
         <article class="s-servico__text"><?php echo get_field('conteudo_terceira'); ?></article>
         <?php if (have_rows('lista_terceira')) : ?>

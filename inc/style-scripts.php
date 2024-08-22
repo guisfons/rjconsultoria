@@ -1,5 +1,5 @@
 <?php
-define('ASSETS_VERSION','1');
+define('ASSETS_VERSION','1.4');
 
 /**
  * Enqueue scripts and styles that are used on every page
@@ -13,8 +13,18 @@ function themeFiles() {
     wp_register_style('style', get_stylesheet_directory_uri() . '/assets/css/main.min.css', array(), ASSETS_VERSION, 'screen');
     wp_enqueue_style('style');
 
-    wp_register_script('jQuery', 'https://code.jquery.com/jquery-3.7.1.min.js', array(), ASSETS_VERSION, true);
+    wp_register_script('jQuery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js', array(), ASSETS_VERSION, true);
     wp_enqueue_script('jQuery');
+
+    wp_register_script('jQueryMask', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js', array(), ASSETS_VERSION, true);
+    wp_enqueue_script('jQueryMask');
+
+    wp_register_script('niceSelect', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js', array(), ASSETS_VERSION, true);
+    wp_enqueue_script('niceSelect');
+    wp_register_style('niceSelect-css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css', array(), ASSETS_VERSION, 'screen');
+    wp_enqueue_style('niceSelect-css');
+    wp_register_style('niceSelect-cssMap', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css.map', array(), ASSETS_VERSION, 'screen');
+    wp_enqueue_style('niceSelect-cssMap');
     
     // Slick
     wp_register_style('slick-css', '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), ASSETS_VERSION, 'screen');
@@ -22,13 +32,17 @@ function themeFiles() {
     wp_register_script('slick-js', '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array(), ASSETS_VERSION, true);
     wp_enqueue_script('slick-js');
 
-    // GSAP
-    wp_enqueue_script( 'gsap-js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), false, true );
-    wp_enqueue_script( 'gsap-st', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js', array('gsap-js'), false, true );
-    wp_enqueue_script( 'locomotive', 'https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.min.js', array(), false, true );
-    wp_enqueue_script( 'gsap-js2', get_template_directory_uri() . '/assets/js/app.js', array('gsap-js'), false, true );
-
-    wp_register_script('javascript', get_stylesheet_directory_uri() . '/assets/js/main.js', array(), ASSETS_VERSION, true);
+    wp_register_script(
+        'javascript',
+        get_stylesheet_directory_uri() . '/assets/js/main.js',
+        array('jQuery'),
+        ASSETS_VERSION,
+        true
+    );
+    wp_localize_script('javascript', 'my_ajax_object', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('calculo_nonce_action')
+    ));
     wp_enqueue_script('javascript');
 
     enqueueTargetAssets(getTargetType());
@@ -51,9 +65,9 @@ function getTargetType() {
  */
 function enqueueTargetAssets($page) {
     $pageAssetsConfig = (object) array(
-        "home" => ["javascripts" => [], "css" => ["home.min.css"], "type" => "page", "concat" => true],
+        "home" => ["javascripts" => ["home.js"], "css" => ["home.min.css"], "type" => "page", "concat" => true],
         "tempo-de-trabalho" => ["javascripts" => [], "css" => ["tempo-de-trabalho.min.css"], "type" => "page", "concat" => true],
-        "processos" => ["javascripts" => [], "css" => ["processos.min.css"], "type" => "page", "concat" => true],
+        "processos" => ["javascripts" => ["processos.js"], "css" => ["processos.min.css"], "type" => "page", "concat" => true],
         "servicos" => ["javascripts" => [], "css" => ["servicos.min.css"], "type" => "page", "concat" => true],
     );
 

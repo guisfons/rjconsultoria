@@ -7,8 +7,10 @@
     // Inferior
     $imagem = get_field('imagem_de_destaque', 'option');
     $texto2 = get_field('texto_de_destaque', 'option');
+
+    if(!is_page('processos')):
     ?>
-    <section animate-fadein class="footer-ajuda">
+    <section class="footer-ajuda">
         <div class="wrapper footer-ajuda__inferior">
             <article><?= $content; ?></article>
             <div class="card">
@@ -22,6 +24,7 @@
             </div>
         </div>
     </section>
+    <?php endif; ?>
     <section class="footer__content">
         <div class="wrapper">
             <figure class="footer__logo"><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/img/logotipo.webp" alt="RJ Consultoria"></figure>

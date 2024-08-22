@@ -5,7 +5,7 @@ if($nossos_servicos) :
     $servicos = $nossos_servicos['servicos'];
 ?>
 <section class="wrapper n-servicos">
-    <div animate-fadein class="n-servicos__header">
+    <div class="n-servicos__header">
         <h2>Nossos Serviços</h2>
         <a href="<?= esc_url($saiba_mais); ?>" title="Saiba mais">Saiba mais <img src="<?= esc_url(get_template_directory_uri() . '/assets/img/arrow-icon.svg'); ?>"></a>
     </div>
@@ -18,7 +18,7 @@ if($nossos_servicos) :
                     if ($x > 0) {
                         echo '</div>';
                     }
-                    echo '<div animate-fadein class="n-servicos__row">';
+                    echo '<div class="n-servicos__row">';
                 }
 
                 $icone = $row['icone'];

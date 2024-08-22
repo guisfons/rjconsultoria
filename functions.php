@@ -305,7 +305,6 @@ function fix_svg() {
 }
 add_action( 'admin_head', 'fix_svg' );
 
-// Remove Gravatar from user profile page
 function remove_gravatar_from_user_profile($user) {
     ?>
     <style>
@@ -313,5 +312,104 @@ function remove_gravatar_from_user_profile($user) {
     </style>
     <?php
 }
+
 add_action('show_user_profile', 'remove_gravatar_from_user_profile');
 add_action('edit_user_profile', 'remove_gravatar_from_user_profile');
+
+add_action('wp_ajax_create_pessoas_post', 'create_pessoas_post');
+add_action('wp_ajax_nopriv_create_pessoas_post', 'create_pessoas_post');
+
+function create_pessoas_post() {
+    check_ajax_referer('calculo_nonce_action', 'calculo_nonce');
+
+    $title = sanitize_text_field($_POST['title']);
+    $content = wp_kses_post($_POST['content']);
+
+    // Create new post
+    $post_id = wp_insert_post(array(
+        'post_title'   => $title,
+        'post_content' => $content,
+        'post_status'  => 'publish',
+        'post_type'    => 'pessoas',
+    ));
+
+    if ($post_id) {
+        wp_send_json_success();
+    } else {
+        wp_send_json_error('Error creating post');
+    }
+}
+
+function generate_unique_user_creation_link($role = 'subscriber') {
+    $token = wp_generate_password(20, false);
+
+    $url = add_query_arg([
+        'action' => 'create_user',
+        'token' => $token,
+        'role' => $role,
+    ], site_url());
+
+    update_option('user_creation_token_' . $token, $role);
+
+    return $url;
+}
+
+function handle_user_creation_request() {
+    if (isset($_GET['action']) && $_GET['action'] === 'create_user' && isset($_GET['token'])) {
+        $token = sanitize_text_field($_GET['token']);
+        $role = get_option('user_creation_token_' . $token);
+
+        if ($role) {
+            delete_option('user_creation_token_' . $token);
+
+            wp_redirect(wp_registration_url());
+            exit;
+        } else {
+            wp_die('Link inválido ou expirado.');
+        }
+    }
+}
+add_action('init', 'handle_user_creation_request');
+$unique_link = generate_unique_user_creation_link('subscriber');
+
+function modify_colaborador_capabilities() {
+    $role = get_role('colaborador');
+    
+    if ($role) {
+        $role->add_cap('edit_posts');
+        $role->add_cap('publish_posts');
+        $role->add_cap('edit_published_posts');
+        $role->add_cap('delete_published_posts');
+
+        $role->add_cap('edit_processos');
+        $role->add_cap('publish_processos');
+        $role->add_cap('edit_published_processos');
+        $role->add_cap('delete_published_processos');
+
+        $role->add_cap('edit_pessoas');
+        $role->add_cap('publish_pessoas');
+        $role->add_cap('edit_published_pessoas');
+        $role->add_cap('delete_published_pessoas');
+    }
+}
+add_action('init', 'modify_colaborador_capabilities');
+
+function limit_post_categories_to_one() {
+    global $pagenow;
+    if ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) {
+        ?>
+        <script>
+            jQuery(document).ready(function($) {
+                var $categoryCheckBoxes = $('#categorychecklist input[type="checkbox"]');
+                $categoryCheckBoxes.on('change', function() {
+                    if ($(this).is(':checked')) {
+                        $categoryCheckBoxes.not(this).prop('checked', false);
+                    }
+                });
+            });
+        </script>
+        <?php
+    }
+}
+add_action('admin_footer', 'limit_post_categories_to_one');
+

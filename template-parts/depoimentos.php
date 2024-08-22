@@ -2,7 +2,7 @@
 loadModulesScriptsForTemplate('depoimentos.js');
 if (have_rows('depoimentos', 'option')) :
 ?>
-    <section animate-fadein class="depoimentos">
+    <section class="depoimentos">
         <div class="wrapper depoimentos__heading">
             <h2>O que nossos clientes acham sobre os nossos serviços?</h2>
             <div class="depoimentos__nav">

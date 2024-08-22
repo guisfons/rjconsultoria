@@ -36,34 +36,34 @@ function ks_register_post_types(){
 
     $posttypes = array(
 
-        // 'empresas' => array(
+        'pessoas' => array(
 
-        //     'labels' => array(
-        //         'name'               => __('Empresas'),
-        //         'singular_name'      => __('Empresa'),
-        //         'menu_name'          => __('Empresas'),
-        //         'name_admin_bar'     => __('Empresas'),
-        //         'add_new'            => __('Nova Empresa'),
-        //         'add_new_item'       => __('Nova Empresa'),
-        //         'new_item'           => __('Nova Empresa'),
-        //         'edit_item'          => __('Editar Empresa'),
-        //         'view_item'          => __('Ver Empresa'),
-        //         'all_items'          => __('Empresas'),
-        //         'search_items'       => __('Procurar por Empresas'),
-        //         'parent_item_colon'  => __('Empresas pai:'),
-        //         'not_found'          => __('Nenhum Empresa encontrado.'),
-        //         'not_found_in_trash' => __('Nenhum Empresa encontrado na lixeira.')
-        //     ),
-        //     'menu_icon' => 'dashicons-store',
-        //     'description' => __('Empresas'),
-        //     'rest_base' =>'custom/empresas',
-        //     'has_archive' => 'biblioteca/empresas',
-        //     'rewrite'     => [
-        //         'slug' => 'empresas',
-        //     ],
-        //     'supports'    => array('title', 'thumbnail'),
-        //     'show_in_rest' => false,  // @info inherited from old version
-        // ),
+            'labels' => array(
+                'name'               => __('Pessoas'),
+                'singular_name'      => __('Pessoa'),
+                'menu_name'          => __('Pessoas'),
+                'name_admin_bar'     => __('Pessoas'),
+                'add_new'            => __('Nova Pessoa'),
+                'add_new_item'       => __('Nova Pessoa'),
+                'new_item'           => __('Nova Pessoa'),
+                'edit_item'          => __('Editar Pessoa'),
+                'view_item'          => __('Ver Pessoa'),
+                'all_items'          => __('Pessoas'),
+                'search_items'       => __('Procurar por Pessoas'),
+                'parent_item_colon'  => __('Pessoas pai:'),
+                'not_found'          => __('Nenhum Pessoa encontrado.'),
+                'not_found_in_trash' => __('Nenhum Pessoa encontrado na lixeira.')
+            ),
+            'menu_icon' => 'dashicons-universal-access-alt',
+            'description' => __('Pessoas'),
+            'rest_base' =>'custom/pessoas',
+            'has_archive' => 'biblioteca/pessoas',
+            'rewrite'     => [
+                'slug' => 'pessoas',
+            ],
+            'supports'    => array('title', 'thumbnail', 'editor'),
+            'show_in_rest' => false,  // @info inherited from old version
+        ),
 
         // 'eventos' => array(
 
@@ -191,9 +191,9 @@ function ks_change_post_label() {
     global $menu;
 	global $submenu;
 
-    $menu[5][0] = 'Notícias';
-    $submenu['edit.php'][5][0] = 'Notícias';
-    $submenu['edit.php'][10][0] = 'Adicionar Notícia';
+    $menu[5][0] = 'Processos';
+    $submenu['edit.php'][5][0] = 'Processos';
+    $submenu['edit.php'][10][0] = 'Adicionar Processo';
 
 }
 
@@ -204,20 +204,20 @@ function ks_change_post_object() {
 	global $wp_post_types;
 
     $labels = &$wp_post_types['post']->labels;
-    $labels->name = 'Notícias';
-    $labels->singular_name = 'Notícias';
-	$labels->menu_name = 'Notícias';
-	$labels->name_admin_bar = 'Notícias';
-    $labels->add_new = 'Nova Notícia';
-    $labels->add_new_item = 'Nova Notícia';
-    $labels->new_item = 'Nova Notícia';
-    $labels->edit_item = 'Editar Notícia';
-    $labels->view_item = 'Ver Notícia';
-    $labels->all_items = 'Notícias';
-	$labels->search_items = 'Procurar Notícias';
-	$labels->parent_item_colon = 'Notícias pai:';
-    $labels->not_found = 'Nenhuma Notícia encontrada';
-	$labels->not_found_in_trash = 'Nenhuma Notícia encontrada na lixeira';
+    $labels->name = 'Processos';
+    $labels->singular_name = 'Processos';
+	$labels->menu_name = 'Processos';
+	$labels->name_admin_bar = 'Processos';
+    $labels->add_new = 'Novo Processo';
+    $labels->add_new_item = 'Novo Processo';
+    $labels->new_item = 'Novo Processo';
+    $labels->edit_item = 'Editar Processo';
+    $labels->view_item = 'Ver Processo';
+    $labels->all_items = 'Processos';
+	$labels->search_items = 'Procurar Processos';
+	$labels->parent_item_colon = 'Processos pai:';
+    $labels->not_found = 'Nenhuma Processo encontrada';
+	$labels->not_found_in_trash = 'Nenhuma Processo encontrada na lixeira';
 
 }
 
