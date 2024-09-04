@@ -55,9 +55,9 @@ if ($calculo) :
         </form>
 
         <?php echo do_shortcode( '[contact-form-7 id="'.$formulario.'" ]' ); ?>
+        <input type="hidden" class="t-trabalho__nonce" value="<?php echo wp_create_nonce('calculo_nonce_action'); ?>">
         
         <button class="t-trabalho__enviar">Enviar dados</button>
-        <input type="hidden" id="calculo_nonce" name="calculo_nonce" value="<?php echo wp_create_nonce('calculo_nonce_action'); ?>">
     </div>
 <?php
     echo '</section>';

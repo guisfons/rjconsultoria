@@ -322,22 +322,82 @@ add_action('wp_ajax_nopriv_create_pessoas_post', 'create_pessoas_post');
 function create_pessoas_post() {
     check_ajax_referer('calculo_nonce_action', 'calculo_nonce');
 
-    $title = sanitize_text_field($_POST['title']);
-    $content = wp_kses_post($_POST['content']);
+    $nome_completo = sanitize_text_field($_POST['nome'] . ' ' . $_POST['sobrenome']);
+    $sexo = sanitize_text_field($_POST['sexo']);
+    $telefone = sanitize_text_field($_POST['telefone']);
+    $email = sanitize_text_field($_POST['email']);
+    $idade = '';
+    $hoje = new DateTime();
+    $data_nascimento = DateTime::createFromFormat('d/m/Y', sanitize_text_field($_POST['Nascimento']));
+    $diferenca = $hoje->diff($data_nascimento);
+    $empregos = isset($_POST['empregos']) ? json_decode(stripslashes($_POST['empregos']), true) : array();
 
-    // Create new post
     $post_id = wp_insert_post(array(
-        'post_title'   => $title,
-        'post_content' => $content,
+        'post_title'   => $nome_completo,
         'post_status'  => 'publish',
         'post_type'    => 'pessoas',
     ));
 
     if ($post_id) {
-        wp_send_json_success();
+        $field = acf_get_field('empresas_trabalhadas');
+        if ($field) {
+            $field_key = $field['key'];
+            if (!empty($empregos)) {
+                $acf_data = array();
+                $total_dias = 0;
+
+                foreach ($empregos as $emprego) {
+                    $data_admissao = DateTime::createFromFormat('d/m/Y', $emprego['data_admissao']);
+                    $data_demissao = DateTime::createFromFormat('d/m/Y', $emprego['data_demissao']);
+
+                    if ($data_admissao && $data_demissao) {
+                        $formatted_data_admissao = $data_admissao->format('Y-m-d');
+                        $formatted_data_demissao = $data_demissao->format('Y-m-d');
+
+                        $interval = $data_admissao->diff($data_demissao);
+                        $tempo_total_em_dias = $interval->days + 1;
+                        if ($interval->invert) {
+                            $tempo_total_em_dias = -$tempo_total_em_dias;
+                        }
+                    } else {
+                        $tempo_total_em_dias = 0;
+                    }
+
+                    $total_dias += $tempo_total_em_dias;
+
+                    $acf_data[] = array(
+                        'nome_da_empresa'  => sanitize_text_field($emprego['empresa']),
+                        'data_de_admissao' => $formatted_data_admissao,
+                        'data_de_demissao' => $formatted_data_demissao,
+                        'tipo'             => sanitize_text_field($emprego['tipo_tempo']),
+                        'tempo_total_em_dias' => $tempo_total_em_dias,
+                    );
+                }
+
+                $years = floor($total_dias / 365);
+                $remaining_days = $total_dias % 365;
+                $months = floor($remaining_days / 30);
+                $days = $remaining_days % 30;
+                
+                update_field('sexo', $sexo, $post_id);
+                update_field('telefone', $telefone, $post_id);
+                update_field('email', $email, $post_id);
+                update_field('data_de_nascimento', $data_nascimento->format('Y-m-d'), $post_id);
+                update_field('idade', $diferenca->y, $post_id);
+                update_field('anos_trabalhados', $years, $post_id);
+                update_field('meses_trabalhados', $months, $post_id);
+                update_field('dias_trabalhados', $days, $post_id);
+
+                update_field($field_key, $acf_data, $post_id);
+            }
+        }
+
+        wp_send_json_success(array('post_id' => $post_id));
     } else {
         wp_send_json_error('Error creating post');
     }
+
+    wp_die();
 }
 
 function generate_unique_user_creation_link($role = 'subscriber') {
@@ -413,3 +473,24 @@ function limit_post_categories_to_one() {
 }
 add_action('admin_footer', 'limit_post_categories_to_one');
 
+function custom_login_redirect($redirect_to, $request, $user) {
+    if (isset($user->roles) && is_array($user->roles)) {
+        if (in_array('administrator', $user->roles) || in_array('editor', $user->roles)) {
+            return home_url('/wp-admin');
+        } else {
+            return home_url('/processos');
+        }
+    } else {
+        return $redirect_to;
+    }
+}
+add_filter('login_redirect', 'custom_login_redirect', 10, 3);
+
+function disable_wp_login_page() {
+    global $pagenow;
+    if ($pagenow == 'wp-login.php' && !is_user_logged_in()) {
+        wp_redirect(home_url('/login'));
+        exit();
+    }
+}
+// add_action('init', 'disable_wp_login_page');

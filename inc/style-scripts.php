@@ -69,6 +69,7 @@ function enqueueTargetAssets($page) {
         "tempo-de-trabalho" => ["javascripts" => [], "css" => ["tempo-de-trabalho.min.css"], "type" => "page", "concat" => true],
         "processos" => ["javascripts" => ["processos.js"], "css" => ["processos.min.css"], "type" => "page", "concat" => true],
         "servicos" => ["javascripts" => [], "css" => ["servicos.min.css"], "type" => "page", "concat" => true],
+        "login" => ["javascripts" => [], "css" => ["login.min.css"], "type" => "page", "concat" => true],
     );
 
     if (property_exists($pageAssetsConfig, $page)) {

@@ -34,9 +34,18 @@ function header() {
     })
 }
 
+function masks() {
+    $(document).on('input', 'input[name="CPF"]', function() {
+        $(this).mask('999.999.999-99');
+    });
+    
+    $(document).on('input', 'input[name="Nascimento"], .t-trabalho__admissao, .t-trabalho__demissao', function() {
+        $(this).mask('99/99/9999');
+    });
+}
+
 function formulario() {
-    $('input[name="CPF"]').mask('999.999.999-99')
-    $('input[name="Nascimento"], .t-trabalho__admissao, .t-trabalho__demissao').mask('99/99/9999')
+    masks()
 
     $('.t-trabalho__calculo').on('submit', function() {
         return false
@@ -62,22 +71,20 @@ function formulario() {
     })
 
     $('.t-trabalho__enviar').on('click', function() {
-        $(this).parent().find('form').each(function() {
-            $(this).find('input, select').each(function() {
-                if($(this).val() == '' || $(this).val() == 'null') {
-                    if($(this).is('select')) {
-                        $(this).next('.nice-select').focus().css('border', '1px solid red')
-                    } else {
-                        $(this).focus().css('border', '1px solid red')
-                    }
-
-                    return
-                }
-            })
-        })
+        // $(this).parent().find('form').each(function() {
+        //     $(this).find('input, select').each(function() {
+        //         if($(this).val() == '' || $(this).val() == 'null') {
+        //             if($(this).is('select')) {
+        //                 $(this).next('.nice-select').focus().css('border', '1px solid red')
+        //             } else {
+        //                 $(this).focus().css('border', '1px solid red')
+        //             }
+        //             return
+        //         }
+        //     })
+        // })
 
         $(this).parent().find('.wpcf7-submit').click()
-
         calculo()
     })
 }
@@ -90,19 +97,25 @@ function calculo() {
             empresa: $(this).find('.t-trabalho__nome').val(),
             data_admissao: $(this).find('.t-trabalho__admissao').val(),
             data_demissao: $(this).find('.t-trabalho__demissao').val(),
-            select_value: $(this).find('select').val()
+            tipo_tempo: $(this).find('select').val()
         }
-
+        
         empregos.push(emprego)
     })
 
+    let cf7Form = $('.t-trabalho__calculo + .wpcf7 form').serialize();
+    let calculoNonce = $('.t-trabalho__nonce').val();
+
+    cf7Send(cf7Form, empregos, calculoNonce)
+}
+
+function cf7Send(cf7Form, empregos, calculoNonce) {
     $(document).on('wpcf7mailsent', function(event) {
-        let formId = event.detail.contactFormId
-        let status = event.detail.status
+        let formData = ''
 
-        let formData
-
-        formData += '&calculo_nonce=' + my_ajax_object.nonce
+        formData += cf7Form + '&' + '&empregos=' + 
+            encodeURIComponent(JSON.stringify(empregos)) + '&calculo_nonce=' +
+            calculoNonce + '&action=create_pessoas_post'
 
         $.ajax({
             url: '/wp-admin/admin-ajax.php',
@@ -110,14 +123,16 @@ function calculo() {
             data: formData,
             success: function(response) {
                 if (response.success) {
-                    alert('Post created successfully!')
+                    alert('Calculo feito com sucesso!')
                 } else {
-                    alert('Failed to create post: ' + response.data)
+                    alert('Erro: 2 | Não foi possível fazer o calculo, tente novamente mais tarde!')
                 }
             },
             error: function(xhr, status, error) {
-                alert('AJAX error: ' + error)
+                alert('Erro: 1 | Não foi possível fazer o calculo, tente novamente mais tarde!')
             }
         })
+
+        return
     })
 }

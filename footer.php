@@ -8,7 +8,7 @@
     $imagem = get_field('imagem_de_destaque', 'option');
     $texto2 = get_field('texto_de_destaque', 'option');
 
-    if(!is_page('processos')):
+    if(!is_page('processos') && !is_page('login')):
     ?>
     <section class="footer-ajuda">
         <div class="wrapper footer-ajuda__inferior">

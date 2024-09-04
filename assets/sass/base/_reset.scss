@@ -74,3 +74,25 @@ ul:not(.slick-dots):not(.list) {
         }
     }
 }
+
+.nice-select {
+    height: 4.7rem;
+    line-height: 4.7rem;
+    padding: 0 1.4rem !important;
+
+    .current {
+        opacity: 0.4;
+    }
+
+    ul.list {
+        background-color: $black;
+
+        li {
+            transition: .3s ease-in-out;
+
+            &.selected.focus, &.focus, &:hover {
+                background-color: $secondary;
+            }
+        } 
+    }
+}
