@@ -227,6 +227,11 @@ function login_logo_url_title() {
 
 add_filter( 'login_headertext', 'login_logo_url_title' );
 
+function custom_logout_redirect() {
+    wp_redirect(home_url());
+    exit();
+}
+add_action('wp_logout', 'custom_logout_redirect');
 
 /**
  * Declaring the JS files for the site
@@ -323,12 +328,12 @@ function create_pessoas_post() {
     check_ajax_referer('calculo_nonce_action', 'calculo_nonce');
 
     $nome_completo = sanitize_text_field($_POST['nome'] . ' ' . $_POST['sobrenome']);
-    $sexo = sanitize_text_field($_POST['sexo']);
+    $genero = sanitize_text_field(strtolower($_POST['genero']));
     $telefone = sanitize_text_field($_POST['telefone']);
     $email = sanitize_text_field($_POST['email']);
     $idade = '';
     $hoje = new DateTime();
-    $data_nascimento = DateTime::createFromFormat('d/m/Y', sanitize_text_field($_POST['Nascimento']));
+    $data_nascimento = DateTime::createFromFormat('d/m/Y', sanitize_text_field($_POST['nascimento']));
     $diferenca = $hoje->diff($data_nascimento);
     $empregos = isset($_POST['empregos']) ? json_decode(stripslashes($_POST['empregos']), true) : array();
 
@@ -349,6 +354,7 @@ function create_pessoas_post() {
                 foreach ($empregos as $emprego) {
                     $data_admissao = DateTime::createFromFormat('d/m/Y', $emprego['data_admissao']);
                     $data_demissao = DateTime::createFromFormat('d/m/Y', $emprego['data_demissao']);
+                    $tipo_tempo = $emprego['tipo_tempo'];
 
                     if ($data_admissao && $data_demissao) {
                         $formatted_data_admissao = $data_admissao->format('Y-m-d');
@@ -356,6 +362,15 @@ function create_pessoas_post() {
 
                         $interval = $data_admissao->diff($data_demissao);
                         $tempo_total_em_dias = $interval->days + 1;
+
+                        if($tipo_tempo == 'especial') {
+                            if($genero == 'masculino') {
+                                $tempo_total_em_dias = $tempo_total_em_dias + ($tempo_total_em_dias * 0.4);
+                            } else {
+                                $tempo_total_em_dias = $tempo_total_em_dias + ($tempo_total_em_dias * 0.2);
+                            }
+                        }
+
                         if ($interval->invert) {
                             $tempo_total_em_dias = -$tempo_total_em_dias;
                         }
@@ -374,25 +389,25 @@ function create_pessoas_post() {
                     );
                 }
 
-                $years = floor($total_dias / 365);
-                $remaining_days = $total_dias % 365;
-                $months = floor($remaining_days / 30);
-                $days = $remaining_days % 30;
+                $anos = floor($total_dias / 365);
+                $dias_remanescentes = $total_dias % 365;
+                $meses = floor($dias_remanescentes / 30);
+                $dias = $dias_remanescentes % 30;
                 
-                update_field('sexo', $sexo, $post_id);
+                update_field('sexo', $genero, $post_id);
                 update_field('telefone', $telefone, $post_id);
                 update_field('email', $email, $post_id);
                 update_field('data_de_nascimento', $data_nascimento->format('Y-m-d'), $post_id);
                 update_field('idade', $diferenca->y, $post_id);
-                update_field('anos_trabalhados', $years, $post_id);
-                update_field('meses_trabalhados', $months, $post_id);
-                update_field('dias_trabalhados', $days, $post_id);
+                update_field('anos_trabalhados', $anos, $post_id);
+                update_field('meses_trabalhados', $meses, $post_id);
+                update_field('dias_trabalhados', $dias, $post_id);
 
                 update_field($field_key, $acf_data, $post_id);
             }
         }
 
-        wp_send_json_success(array('post_id' => $post_id));
+        wp_send_json_success(array('post_id' => $post_id, 'total_dias' => $total_dias, 'anos_trabalhados' => $anos, 'meses_trabalhados' => $meses, 'dias_trabalhados' => $dias));
     } else {
         wp_send_json_error('Error creating post');
     }
@@ -494,3 +509,20 @@ function disable_wp_login_page() {
     }
 }
 // add_action('init', 'disable_wp_login_page');
+
+function recaptcha() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['g-recaptcha-response'])) {
+        $recaptcha_secret = '6LeOvyoqAAAAAE03ZefjzjgPrrwnB32Qplckafa6';
+        $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
+        
+        $response = wp_remote_get("https://www.google.com/recaptcha/api/siteverify?secret=$recaptcha_secret&response=$recaptcha_response");
+        $responseKeys = json_decode(wp_remote_retrieve_body($response), true);
+
+        if ($responseKeys["success"]) {
+            echo "reCAPTCHA verified successfully!";
+        } else {
+            echo "reCAPTCHA verification failed!";
+        }
+    }
+}
+add_action('init', 'recaptcha');

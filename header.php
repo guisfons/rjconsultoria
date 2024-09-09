@@ -52,5 +52,26 @@
 			</div>
 		</div>
 	</header>
-
+	<aside class="aside">
+		<div class="aside__button">
+			<span class="bar bar1"></span>
+			<span class="bar bar2"></span>
+		</div>
+		<div class="aside__menu">
+		<?php
+		$header_menu = wp_get_nav_menu_items('Menu');
+		if(is_array($header_menu)){
+			foreach($header_menu as $key => $menu_item){
+				echo '<a title="'. str_replace('*', '', $menu_item->title) .'" href="'.$menu_item->url.'" class="header__item '. $menu_item->classes[0] . (get_the_ID() == $menu_item->object_id ? ' header__item--active' : '') .'" target="'.$menu_item->target.'">';
+					$menu_title = $menu_item->title;
+					if (strpos($menu_item->title, '*') !== false) {
+						$menu_title = str_replace('*', '', $menu_item->title);
+					}
+					echo $menu_title;
+				echo '</a>';
+			}
+		}
+		?>
+		</div>
+	</aside>
 	<main>

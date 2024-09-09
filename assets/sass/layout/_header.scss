@@ -26,27 +26,7 @@
         width: 100%;
 
         @include max (900) {
-            opacity: 0;
-            visibility: hidden;
-
-            width: 80vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            right: 0;
-            transform: translateX(80vw);
-            transition: .5s ease-in-out;
-
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: $bg-dark-button;
-        }
-
-        &--active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
+            display: none;
         }
     }
 
@@ -149,11 +129,6 @@
             height: .2rem;
             background: $bg-gradient;
             transition: all 0.5s ease;
-        }
-
-        &--active {
-            position: relative;
-            z-index: 999999;
         }
     }
 }
