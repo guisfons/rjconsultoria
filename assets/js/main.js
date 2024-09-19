@@ -121,13 +121,17 @@ function formulario() {
         })
 
         let form = $('.t-trabalho__calculo').serialize()
-        let calculoNonce = $('.t-trabalho__nonce').val()
+        // let calculoNonce = $('.t-trabalho__nonce').val()
 
         let formData = ''
 
+        // formData += form + '&' + '&empregos=' + 
+        //     encodeURIComponent(JSON.stringify(empregos)) + '&calculo_nonce=' +
+        //     calculoNonce + '&action=create_pessoas_post'
+
         formData += form + '&' + '&empregos=' + 
-            encodeURIComponent(JSON.stringify(empregos)) + '&calculo_nonce=' +
-            calculoNonce + '&action=create_pessoas_post'
+            encodeURIComponent(JSON.stringify(empregos)) +
+            '&action=create_pessoas_post'
 
         if($('[name="acceptance"]').is(':not(:checked)')) {
             $('[name="acceptance"]').parent().focus().addClass('error')
