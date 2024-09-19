@@ -1,4 +1,10 @@
 window.addEventListener('DOMContentLoaded', function(){
+    var scrollpos = localStorage.getItem('scrollpos');
+    if (scrollpos) window.scrollTo(0, scrollpos);
+
+    window.onbeforeunload = function(e) {
+        localStorage.setItem('scrollpos', window.scrollY);
+    };
 
     window.addEventListener('resize', function(){
         wrapperDistance()
@@ -158,6 +164,7 @@ function formulario() {
                         // $('.t-trabalho__meses').append('<strong>'+response.data.meses_trabalhados+'</strong> Meses')
                         // $('.t-trabalho__dias').append('<strong>'+response.data.dias_trabalhados+'</strong> Dias')
                         // $('.t-trabalho__nonce').val(response.data.nonce)
+                        
                         $('.t-trabalho__modal').addClass('t-trabalho__modal--active')
                     } else {
                         alert('Erro: 2 | Não foi possível fazer o calculo, tente novamente mais tarde!')
@@ -175,5 +182,6 @@ function formulario() {
         $(this).closest('.t-trabalho').find('.t-trabalho__form').find('input, textarea').val('')
         $(this).closest('.t-trabalho').find('.t-trabalho__form').find('input[type="checkbox"]').prop('checked', false)
         $(this).parent().removeClass('t-trabalho__modal--active')
+        location.reload()
     })
 }
