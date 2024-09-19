@@ -94,7 +94,6 @@ function formulario() {
                 }
 
                 hasError = true
-                return false
             } else {
                 if($(this).is('select')) {
                     $(this).next('.nice-select').removeClass('error')

@@ -389,7 +389,7 @@ function create_pessoas_post() {
                     );
                 }
 
-                $anos = floor($total_dias / 365);
+                $anos = (int)($total_dias / 365);
                 $dias_remanescentes = $total_dias % 365;
                 $meses = floor($dias_remanescentes / 30);
                 $dias = $dias_remanescentes % 30;
