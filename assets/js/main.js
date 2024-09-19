@@ -151,9 +151,10 @@ function formulario() {
                 data: formData,
                 success: function(response) {
                     if (response.success) {
-                        $('.t-trabalho__anos').append('<strong>'+response.data.anos_trabalhados+'</strong> Anos')
-                        $('.t-trabalho__meses').append('<strong>'+response.data.meses_trabalhados+'</strong> Meses')
-                        $('.t-trabalho__dias').append('<strong>'+response.data.dias_trabalhados+'</strong> Dias')
+                        // $('.t-trabalho__anos').append('<strong>'+response.data.anos_trabalhados+'</strong> Anos')
+                        // $('.t-trabalho__meses').append('<strong>'+response.data.meses_trabalhados+'</strong> Meses')
+                        // $('.t-trabalho__dias').append('<strong>'+response.data.dias_trabalhados+'</strong> Dias')
+                        $('.t-trabalho__nonce').val(response.data.nonce)
                         $('.t-trabalho__modal').addClass('t-trabalho__modal--active')
                     } else {
                         alert('Erro: 2 | Não foi possível fazer o calculo, tente novamente mais tarde!')

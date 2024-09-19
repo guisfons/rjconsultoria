@@ -46,7 +46,7 @@ if ($calculo) :
                 <input type="text" name="nome" id="nome" placeholder="Nome*" required>
                 <input type="text" name="sobrenome" id="sobrenome" placeholder="Sobrenome*" required>
                 <input type="tel" name="nascimento" id="nascimento" placeholder="Data de nascimento*">
-                <select required>
+                <select name="genero" id="genero" required>
                     <option value="" selected>Gênero</option>
                     <option value="feminino">Feminino</option>
                     <option value="masculino">Masculino</option>
@@ -82,10 +82,11 @@ if ($calculo) :
     </div>
 
     <div class="t-trabalho__modal">
-        <h5>Você trabalhou por:</h5>
-        <span class="t-trabalho__anos"></span>
+        <!-- <h5>Você trabalhou por:</h5> -->
+		<h5>Formulário enviado com sucesso! Em breve, um de nossos atendentes entrará em contato com você.</h5>
+        <!-- <span class="t-trabalho__anos"></span>
         <span class="t-trabalho__meses"></span>
-        <span class="t-trabalho__dias"></span>
+        <span class="t-trabalho__dias"></span> -->
 
         <button class="t-trabalho__close"></button>
     </div>

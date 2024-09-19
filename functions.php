@@ -361,7 +361,7 @@ function create_pessoas_post() {
                         $formatted_data_demissao = $data_demissao->format('Y-m-d');
 
                         $interval = $data_admissao->diff($data_demissao);
-                        $tempo_total_em_dias = $interval->days + 1;
+                        $tempo_total_em_dias = $interval->days;
 
                         if($tipo_tempo == 'especial') {
                             if($genero == 'masculino') {
@@ -393,6 +393,8 @@ function create_pessoas_post() {
                 $dias_remanescentes = $total_dias % 365;
                 $meses = floor($dias_remanescentes / 30);
                 $dias = $dias_remanescentes % 30;
+
+                $new_nonce = wp_create_nonce('calculo_nonce_action');
                 
                 update_field('sexo', $genero, $post_id);
                 update_field('telefone', $telefone, $post_id);
@@ -407,7 +409,7 @@ function create_pessoas_post() {
             }
         }
 
-        wp_send_json_success(array('post_id' => $post_id, 'total_dias' => $total_dias, 'anos_trabalhados' => $anos, 'meses_trabalhados' => $meses, 'dias_trabalhados' => $dias));
+        wp_send_json_success(array('post_id' => $post_id, 'total_dias' => $total_dias, 'anos_trabalhados' => $anos, 'meses_trabalhados' => $meses, 'dias_trabalhados' => $dias, 'nonce' => $new_nonce));
     } else {
         wp_send_json_error('Error creating post');
     }
