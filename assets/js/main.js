@@ -169,7 +169,7 @@ function formulario() {
 
     $('.t-trabalho__close').on('click', function() {
         grecaptcha.reset()
-        $(this).closest('.t-trabalho').find('.t-trabalho__form').find('input, select, textarea').val('')
+        $(this).closest('.t-trabalho').find('.t-trabalho__form').find('input, textarea').val('')
         $(this).closest('.t-trabalho').find('.t-trabalho__form').find('input[type="checkbox"]').prop('checked', false)
         $(this).parent().removeClass('t-trabalho__modal--active')
     })
