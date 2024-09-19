@@ -361,7 +361,7 @@ function create_pessoas_post() {
                         $formatted_data_demissao = $data_demissao->format('Y-m-d');
 
                         $interval = $data_admissao->diff($data_demissao);
-                        $tempo_total_em_dias = $interval->days;
+                        $tempo_total_em_dias = $interval->days + 1;
 
                         if($tipo_tempo == 'especial') {
                             if($genero == 'masculino') {
