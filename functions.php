@@ -325,7 +325,7 @@ add_action('wp_ajax_create_pessoas_post', 'create_pessoas_post');
 add_action('wp_ajax_nopriv_create_pessoas_post', 'create_pessoas_post');
 
 function create_pessoas_post() {
-    // check_ajax_referer('calculo_nonce_action', 'calculo_nonce');
+    check_ajax_referer('calculo_nonce_action', 'calculo_nonce');
 
     $nome_completo = sanitize_text_field($_POST['nome'] . ' ' . $_POST['sobrenome']);
     $genero = sanitize_text_field(strtolower($_POST['genero']));
@@ -389,12 +389,10 @@ function create_pessoas_post() {
                     );
                 }
 
-                $anos = (int)($total_dias / 365);
+                $anos = floor($total_dias / 365);
                 $dias_remanescentes = $total_dias % 365;
                 $meses = floor($dias_remanescentes / 30);
                 $dias = $dias_remanescentes % 30;
-
-                // $new_nonce = wp_create_nonce('calculo_nonce_action');
                 
                 update_field('sexo', $genero, $post_id);
                 update_field('telefone', $telefone, $post_id);
@@ -415,7 +413,6 @@ function create_pessoas_post() {
             'anos_trabalhados' => $anos,
             'meses_trabalhados' => $meses,
             'dias_trabalhados' => $dias,
-            // 'nonce' => $new_nonce
         ));
     } else {
         wp_send_json_error('Error creating post');

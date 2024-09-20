@@ -127,17 +127,13 @@ function formulario() {
         })
 
         let form = $('.t-trabalho__calculo').serialize()
-        // let calculoNonce = $('.t-trabalho__nonce').val()
+        let calculoNonce = $('.t-trabalho__nonce').val()
 
         let formData = ''
 
-        // formData += form + '&' + '&empregos=' + 
-        //     encodeURIComponent(JSON.stringify(empregos)) + '&calculo_nonce=' +
-        //     calculoNonce + '&action=create_pessoas_post'
-
         formData += form + '&' + '&empregos=' + 
-            encodeURIComponent(JSON.stringify(empregos)) +
-            '&action=create_pessoas_post'
+            encodeURIComponent(JSON.stringify(empregos)) + '&calculo_nonce=' +
+            calculoNonce + '&action=create_pessoas_post'
 
         if($('[name="acceptance"]').is(':not(:checked)')) {
             $('[name="acceptance"]').parent().focus().addClass('error')
@@ -163,7 +159,6 @@ function formulario() {
                         // $('.t-trabalho__anos').append('<strong>'+response.data.anos_trabalhados+'</strong> Anos')
                         // $('.t-trabalho__meses').append('<strong>'+response.data.meses_trabalhados+'</strong> Meses')
                         // $('.t-trabalho__dias').append('<strong>'+response.data.dias_trabalhados+'</strong> Dias')
-                        // $('.t-trabalho__nonce').val(response.data.nonce)
                         
                         $('.t-trabalho__modal').addClass('t-trabalho__modal--active')
                     } else {

@@ -76,7 +76,7 @@ if ($calculo) :
             </label>
         </form>
 
-        <!-- <input type="hidden" class="t-trabalho__nonce" value="<?php echo wp_create_nonce('calculo_nonce_action'); ?>"> -->
+        <input type="hidden" class="t-trabalho__nonce" value="<?php echo wp_create_nonce('calculo_nonce_action'); ?>">
         <div class="g-recaptcha" data-sitekey="6LeOvyoqAAAAAL4orUGkdni1rBpdTGRl7qhG8z64"></div>
         <button class="t-trabalho__enviar">Enviar dados</button>
     </div>
